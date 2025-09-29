@@ -17,6 +17,7 @@ const Header = () => {
             <Nav.Link as={NavLink} to="/" end>Home</Nav.Link>
             <Nav.Link as={NavLink} to="/about">About</Nav.Link>
             <Nav.Link as={NavLink} to="/products">Products</Nav.Link>
+            <Nav.Link as={NavLink} to="/contact">Contact</Nav.Link>
             
             <Button variant="outline-light" onClick={() => setShowCart(true)}>
               🛒 Cart <Badge bg="light" text="dark">{cartCount}</Badge>

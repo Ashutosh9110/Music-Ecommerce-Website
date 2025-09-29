@@ -7,6 +7,7 @@ import { CartProvider } from "./context/CartContext";
 import "./App.css";
 import Home from "./components/Home";
 import Movie from "./components/Movie";
+import Contact from "./components/Contact"; // ✅ import Contact
 
 function App() {
   return (
@@ -19,13 +20,14 @@ function App() {
             path="/products"
             element={
               <>
-                <Movie />  {/* ✅ Movies load on mount now */}
+                <Movie />
                 <h2 className="text-center mt-4">Products</h2>
                 <Products />
               </>
             }
           />
           <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} /> {/* ✅ New route */}
         </Routes>
       </Router>
     </CartProvider>
