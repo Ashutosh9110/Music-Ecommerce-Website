@@ -12,7 +12,7 @@ const Header = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/");
+    navigate("/auth"); // Redirect to login page after logout
   };
 
   return (
