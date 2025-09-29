@@ -10,7 +10,7 @@ export default function AuthForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [isLogin, setIsLogin] = useState(false); // false = Sign Up, true = Sign In
-  const { setAuth } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
@@ -41,7 +41,7 @@ export default function AuthForm() {
       }
 
       // Success: update auth context, show alert, log idToken, redirect
-      setAuth({ isLoggedIn: true, idToken: data.idToken, email: data.email });
+      login(data.idToken, data.email);
       if (isLogin) {
         alert("Sign in successful!");
       } else {

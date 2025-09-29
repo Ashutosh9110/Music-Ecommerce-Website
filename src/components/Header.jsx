@@ -7,11 +7,11 @@ import { AuthContext } from "../context/AuthContext";
 const Header = () => {
   const [showCart, setShowCart] = useState(false);
   const { cartCount } = useContext(CartContext);
-  const { auth, setAuth } = useContext(AuthContext);
+  const { auth, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    setAuth({ isLoggedIn: false, idToken: null, email: null });
+    logout();
     navigate("/");
   };
 
