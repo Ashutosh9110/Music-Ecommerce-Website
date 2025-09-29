@@ -4,15 +4,16 @@ const Movie = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showForm, setShowForm] = useState(false);
   const retryIntervalRef = useRef(null);
 
-  // ✅ useCallback ensures fetchMovies reference is stable
+  // ✅ Fetch movies
   const fetchMovies = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
 
-      const response = await fetch("https://swapi.dev/api/films");
+      const response = await fetch("https://react-movie-base-185d9-default-rtdb.firebaseio.com/movies.json");
       if (!response.ok) {
         throw new Error("Something went wrong... Retrying");
       }
@@ -35,7 +36,7 @@ const Movie = () => {
     } catch (err) {
       setError(err.message);
 
-      // ✅ Retry every 5 seconds (only set interval once)
+      // ✅ Retry every 5 seconds
       if (!retryIntervalRef.current) {
         retryIntervalRef.current = setInterval(fetchMovies, 5000);
       }
@@ -44,17 +45,15 @@ const Movie = () => {
     }
   }, []);
 
-  // ✅ Automatically fetch movies on component mount
+  // ✅ Fetch on mount
   useEffect(() => {
     fetchMovies();
-
-    // Cleanup retry interval on unmount
     return () => {
       if (retryIntervalRef.current) clearInterval(retryIntervalRef.current);
     };
   }, [fetchMovies]);
 
-  // ✅ Cancel retry manually
+  // ✅ Cancel retry
   const cancelRetry = useCallback(() => {
     if (retryIntervalRef.current) {
       clearInterval(retryIntervalRef.current);
@@ -63,7 +62,31 @@ const Movie = () => {
     setError("Retry cancelled by user.");
   }, []);
 
-  // ✅ useMemo to avoid re-rendering the movies list unnecessarily
+  // ✅ Add movie manually
+  const addMovieHandler = (e) => {
+    e.preventDefault();
+    const title = e.target.title.value.trim();
+    const openingText = e.target.openingText.value.trim();
+    const releaseDate = e.target.releaseDate.value.trim();
+
+    if (!title || !openingText || !releaseDate) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    const newMovie = {
+      id: Math.random().toString(),
+      title,
+      openingText,
+      releaseDate,
+    };
+
+    setMovies((prev) => [...prev, newMovie]);
+    e.target.reset();
+    setShowForm(false); // hide form after adding
+  };
+
+  // ✅ Memoize movie list
   const movieList = useMemo(
     () =>
       movies.map((movie) => (
@@ -78,8 +101,57 @@ const Movie = () => {
 
   return (
     <div className="text-center mt-4">
+      {/* ✨ Add Movie Button or Form */}
+      {!showForm ? (
+        <button onClick={() => setShowForm(true)} className="btn btn-success mb-4">
+          Do you have any amazing movies for us?
+        </button>
+      ) : (
+        <form
+          onSubmit={addMovieHandler}
+          style={{
+            maxWidth: "500px",
+            margin: "0 auto",
+            textAlign: "left",
+            padding: "20px",
+            border: "1px solid #ccc",
+            borderRadius: "10px",
+          }}
+        >
+          <div className="mb-3">
+            <label>Title</label>
+            <input name="title" type="text" className="form-control" />
+          </div>
+
+          <div className="mb-3">
+            <label>Opening Text</label>
+            <textarea name="openingText" className="form-control" rows="3"></textarea>
+          </div>
+
+          <div className="mb-3">
+            <label>Release Date</label>
+            <input name="releaseDate" type="text" className="form-control" />
+          </div>
+
+          <div className="d-flex justify-content-between">
+            <button type="submit" className="btn btn-dark">
+              Add Movie
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowForm(false)}
+              className="btn btn-secondary"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      )}
+
+      {/* ✅ Loader */}
       {isLoading && <p>Loading...</p>}
 
+      {/* ✅ Error handling */}
       {error && (
         <div style={{ marginTop: "1rem", color: "red" }}>
           <p>{error}</p>
@@ -91,6 +163,7 @@ const Movie = () => {
         </div>
       )}
 
+      {/* ✅ Movies list */}
       {!isLoading && movies.length > 0 && (
         <ul style={{ listStyle: "none", padding: 0 }}>{movieList}</ul>
       )}
