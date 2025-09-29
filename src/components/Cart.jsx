@@ -1,33 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Modal, Button, Table, Image } from "react-bootstrap";
-
-const cartElements = [
-  {
-    title: "Colors",
-    price: 100,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-    quantity: 2,
-  },
-  {
-    title: "Black and white Colors",
-    price: 50,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-    quantity: 3,
-  },
-  {
-    title: "Yellow and Black Colors",
-    price: 70,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-    quantity: 1,
-  },
-];
+import { CartContext } from "../context/CartContext";
 
 const Cart = ({ show, handleClose }) => {
-  const [cartItems, setCartItems] = useState(cartElements);
-
-  const handleRemove = (index) => {
-    setCartItems(cartItems.filter((_, i) => i !== index));
-  };
+  const { cartItems, removeFromCart } = useContext(CartContext);
 
   return (
     <Modal show={show} onHide={handleClose} size="lg" centered>
@@ -55,7 +31,11 @@ const Cart = ({ show, handleClose }) => {
                     <Image
                       src={item.imageUrl}
                       alt={item.title}
-                      style={{ width: "60px", height: "60px", objectFit: "cover" }}
+                      style={{
+                        width: "60px",
+                        height: "60px",
+                        objectFit: "cover",
+                      }}
                       rounded
                     />
                   </td>
@@ -66,7 +46,7 @@ const Cart = ({ show, handleClose }) => {
                     <Button
                       variant="danger"
                       size="sm"
-                      onClick={() => handleRemove(index)}
+                      onClick={() => removeFromCart(index)}
                     >
                       Remove
                     </Button>

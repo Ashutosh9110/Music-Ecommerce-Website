@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { CartContext } from "../context/CartContext";
 
 const productsArr = [
   {
@@ -29,6 +30,8 @@ const productsArr = [
 ];
 
 const Products = () => {
+  const { addToCart } = useContext(CartContext);
+
   return (
     <Container className="mt-5">
       <Row>
@@ -44,7 +47,11 @@ const Products = () => {
               <Card.Body className="d-flex flex-column">
                 <Card.Title>{product.title}</Card.Title>
                 <Card.Text>Price: ${product.price}</Card.Text>
-                <Button variant="primary" className="mt-auto">
+                <Button
+                  variant="primary"
+                  className="mt-auto"
+                  onClick={() => addToCart(product)}
+                >
                   Add to Cart
                 </Button>
               </Card.Body>

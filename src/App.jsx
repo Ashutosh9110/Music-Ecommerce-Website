@@ -1,21 +1,23 @@
-import React, { useState } from "react";
-import { Navbar, Container, Nav, Button } from "react-bootstrap";
+import React, { useState, useContext } from "react";
+import { Navbar, Container, Nav, Button, Badge } from "react-bootstrap";
 import Products from "./components/Products";
 import Cart from "./components/Cart";
-import "./App.css"
+import { CartProvider, CartContext } from "./context/CartContext";
+import "./App.css";
 
-function App() {
+function AppContent() {
   const [showCart, setShowCart] = useState(false);
+  const { cartCount } = useContext(CartContext);
 
   return (
-    <div>
+    <>
       {/* Navbar with Cart Icon */}
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
           <Navbar.Brand href="#">E-Commerce Store</Navbar.Brand>
           <Nav className="ms-auto">
             <Button variant="outline-light" onClick={() => setShowCart(true)}>
-              🛒 Cart
+              🛒 Cart <Badge bg="light" text="dark">{cartCount}</Badge>
             </Button>
           </Nav>
         </Container>
@@ -27,7 +29,15 @@ function App() {
 
       {/* Cart Modal */}
       <Cart show={showCart} handleClose={() => setShowCart(false)} />
-    </div>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <CartProvider>
+      <AppContent />
+    </CartProvider>
   );
 }
 
