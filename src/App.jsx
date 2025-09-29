@@ -7,7 +7,10 @@ import { CartProvider } from "./context/CartContext";
 import "./App.css";
 import Home from "./components/Home";
 import Movie from "./components/Movie";
-import Contact from "./components/Contact"; // ✅ import Contact
+import Contact from "./components/Contact"; 
+import ProductDetail from "./components/ProductDetail"; 
+
+
 
 function App() {
   return (
@@ -26,12 +29,12 @@ function App() {
               </>
             }
           />
+          <Route path="/products/:id" element={<ProductDetail />} /> {/* ✅ New Route */}
           <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} /> {/* ✅ New route */}
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </Router>
     </CartProvider>
   );
 }
-
 export default App;
