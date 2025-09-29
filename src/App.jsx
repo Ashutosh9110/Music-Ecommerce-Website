@@ -11,6 +11,7 @@ import Contact from "./components/Contact";
 import ProductDetail from "./components/ProductDetail";
 import AuthForm from "./components/AuthForm";
 import { AuthProvider } from "./context/AuthContext";
+import ChangePassword from "./components/ChangePassword";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<AuthForm />} />
+            <Route path="/change-password" element={<ChangePassword />} />
           </Routes>
         </Router>
       </CartProvider>

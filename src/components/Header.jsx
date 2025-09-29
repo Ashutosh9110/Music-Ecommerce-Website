@@ -39,12 +39,20 @@ const Header = () => {
               Sign Up / Sign In
             </NavLink>
           ) : (
-            <button
-              onClick={handleLogout}
-              className="ml-2 px-4 py-1.5 bg-red-600 text-white rounded hover:bg-red-700 font-semibold transition-colors"
-            >
-              Logout
-            </button>
+            <>
+              <button
+                onClick={() => navigate("/change-password")}
+                className="ml-2 px-4 py-1.5 bg-yellow-500 text-white rounded hover:bg-yellow-600 font-semibold transition-colors"
+              >
+                Change Password
+              </button>
+              <button
+                onClick={handleLogout}
+                className="ml-2 px-4 py-1.5 bg-red-600 text-white rounded hover:bg-red-700 font-semibold transition-colors"
+              >
+                Logout
+              </button>
+            </>
           )}
         </nav>
       </div>
