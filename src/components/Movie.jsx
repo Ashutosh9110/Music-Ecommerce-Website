@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 
 const Movie = () => {
   const [movies, setMovies] = useState([]);
@@ -6,12 +6,13 @@ const Movie = () => {
   const [error, setError] = useState(null);
   const retryIntervalRef = useRef(null);
 
-  const fetchMovies = async () => {
+  // ✅ useCallback ensures fetchMovies reference is stable
+  const fetchMovies = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
-      const response = await fetch("https://swapi.dev/api/films");
 
+      const response = await fetch("https://swapi.dev/api/films");
       if (!response.ok) {
         throw new Error("Something went wrong... Retrying");
       }
@@ -26,52 +27,64 @@ const Movie = () => {
 
       setMovies(transformedMovies);
 
-      // ✅ If successful, clear retry loop
+      // ✅ Clear retry loop if successful
       if (retryIntervalRef.current) {
         clearInterval(retryIntervalRef.current);
         retryIntervalRef.current = null;
       }
-
     } catch (err) {
       setError(err.message);
 
-      // ✅ If error, retry every 5 seconds (only set interval once)
+      // ✅ Retry every 5 seconds (only set interval once)
       if (!retryIntervalRef.current) {
         retryIntervalRef.current = setInterval(fetchMovies, 5000);
       }
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  // ✅ Automatically fetch movies on component mount
+  useEffect(() => {
+    fetchMovies();
+
+    // Cleanup retry interval on unmount
+    return () => {
+      if (retryIntervalRef.current) clearInterval(retryIntervalRef.current);
+    };
+  }, [fetchMovies]);
 
   // ✅ Cancel retry manually
-  const cancelRetry = () => {
+  const cancelRetry = useCallback(() => {
     if (retryIntervalRef.current) {
       clearInterval(retryIntervalRef.current);
       retryIntervalRef.current = null;
     }
     setError("Retry cancelled by user.");
-  };
-
-  // Cleanup retry interval when unmounting
-  useEffect(() => {
-    return () => {
-      if (retryIntervalRef.current) clearInterval(retryIntervalRef.current);
-    };
   }, []);
+
+  // ✅ useMemo to avoid re-rendering the movies list unnecessarily
+  const movieList = useMemo(
+    () =>
+      movies.map((movie) => (
+        <li key={movie.id} className="mt-3">
+          <h2>{movie.title}</h2>
+          <h4>Release Date: {movie.releaseDate}</h4>
+          <p>{movie.openingText}</p>
+        </li>
+      )),
+    [movies]
+  );
 
   return (
     <div className="text-center mt-4">
-      <button onClick={fetchMovies} className="btn btn-primary">
-        Fetch Movies
-      </button>
-
       {isLoading && <p>Loading...</p>}
+
       {error && (
         <div style={{ marginTop: "1rem", color: "red" }}>
           <p>{error}</p>
           {error.includes("Retrying") && (
-            <button onClick={cancelRetry} className="btn btn-danger">
+            <button onClick={cancelRetry} className="btn btn-danger mt-2">
               Cancel Retry
             </button>
           )}
@@ -79,15 +92,7 @@ const Movie = () => {
       )}
 
       {!isLoading && movies.length > 0 && (
-        <ul style={{ listStyle: "none", padding: 0 }}>
-          {movies.map((movie) => (
-            <li key={movie.id} className="mt-3">
-              <h2>{movie.title}</h2>
-              <h4>Release Date: {movie.releaseDate}</h4>
-              <p>{movie.openingText}</p>
-            </li>
-          ))}
-        </ul>
+        <ul style={{ listStyle: "none", padding: 0 }}>{movieList}</ul>
       )}
     </div>
   );

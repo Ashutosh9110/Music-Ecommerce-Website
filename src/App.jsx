@@ -19,7 +19,7 @@ function App() {
             path="/products"
             element={
               <>
-                <Movie /> {/* ✅ Movie logic is now separate */}
+                <Movie />  {/* ✅ Movies load on mount now */}
                 <h2 className="text-center mt-4">Products</h2>
                 <Products />
               </>
