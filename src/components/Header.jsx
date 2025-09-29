@@ -14,7 +14,10 @@ const Header = () => {
         <Container>
           <Navbar.Brand as={NavLink} to="/">E-Commerce Store</Navbar.Brand>
           <Nav className="ms-auto align-items-center">
+            <Nav.Link as={NavLink} to="/" end>Home</Nav.Link>
             <Nav.Link as={NavLink} to="/about">About</Nav.Link>
+            <Nav.Link as={NavLink} to="/products">Products</Nav.Link>
+            
             <Button variant="outline-light" onClick={() => setShowCart(true)}>
               🛒 Cart <Badge bg="light" text="dark">{cartCount}</Badge>
             </Button>

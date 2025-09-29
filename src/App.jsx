@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import About from "./components/About";
 import { CartProvider } from "./context/CartContext";
 import "./App.css";
+import Home from "./components/Home";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <Router>
         <Header />
         <Routes>
-          <Route path="/" element={
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={
             <>
               <h2 className="text-center mt-4">Products</h2>
               <Products />
