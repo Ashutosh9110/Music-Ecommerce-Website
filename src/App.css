@@ -7,6 +7,11 @@
   text-align: center;
 }
 
+body {
+  @apply bg-gradient-to-br from-indigo-50 to-indigo-100;
+}
+
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -45,4 +50,30 @@
 .nav-link.active {
   font-weight: bold;
   text-decoration: underline;
+}
+
+
+
+
+
+
+
+.btn {
+  @apply px-4 py-2 rounded font-semibold transition-colors shadow;
+}
+
+.btn-primary {
+  @apply bg-indigo-600 text-white hover:bg-indigo-700;
+}
+
+.btn-secondary {
+  @apply bg-gray-600 text-white hover:bg-gray-700;
+}
+
+.btn-danger {
+  @apply bg-red-600 text-white hover:bg-red-700;
+}
+
+.btn-warning {
+  @apply bg-yellow-500 text-white hover:bg-yellow-600;
 }

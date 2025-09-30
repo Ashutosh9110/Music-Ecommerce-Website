@@ -89,8 +89,7 @@ const Movie = () => {
         body: JSON.stringify(newMovie),
       });
 
-      if (!response.ok) throw new Error("Failed to add movie");
-
+      if (!response.ok) throw new Error("Failed to add movie"); 
       const data = await response.json();
 
       // ✅ Add movie locally with Firebase-generated ID

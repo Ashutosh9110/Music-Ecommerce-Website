@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
-const API_KEY = "YOUR_API_KEY"; // TODO: Replace with your actual API key
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 export default function AuthForm() {
   const [email, setEmail] = useState("");
@@ -14,7 +14,7 @@ export default function AuthForm() {
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
-    e.preventDefault();
+    e.preventDefault();  
     setIsLoading(true);
     setError("");
 

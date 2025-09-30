@@ -41,64 +41,63 @@ const Contact = () => {
   };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: "600px" }}>
-      <h2 className="text-center mb-4">Contact Us</h2>
-
-      <form onSubmit={submitHandler}>
-        <div className="mb-3">
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            className="form-control"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Enter your name"
-          />
-        </div>
-
-        <div className="mb-3">
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            className="form-control"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Enter your email"
-          />
-        </div>
-
-        <div className="mb-3">
-          <label>Phone Number</label>
-          <input
-            type="tel"
-            name="phone"
-            className="form-control"
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="Enter your phone number"
-          />
-        </div>
-
-        <div className="mb-3">
-          <label>Describe Your Issue</label>
-          <textarea
-            name="issue"
-            className="form-control"
-            rows="4"
-            value={formData.issue}
-            onChange={handleChange}
-            placeholder="Describe your problem here"
-          ></textarea>
-        </div>
-
-        <button type="submit" className="btn btn-primary w-100">
-          Submit
-        </button>
-      </form>
-
-      {message && <p className="mt-3 text-center">{message}</p>}
+    <div className="min-h-[calc(100vh-64px)] flex flex-col justify-center items-center bg-gradient-to-br from-indigo-50 to-indigo-100 py-12 px-4">
+      <div className="w-full max-w-lg bg-white rounded-lg shadow-lg p-8 border border-gray-200">
+        <h2 className="text-3xl font-bold mb-6 text-indigo-700 text-center">Contact Us</h2>
+        <form onSubmit={submitHandler} className="space-y-5">
+          <div>
+            <label className="block mb-1 font-medium text-gray-700">Name</label>
+            <input
+              type="text"
+              name="name"
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter your name"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-medium text-gray-700">Email</label>
+            <input
+              type="email"
+              name="email"
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-medium text-gray-700">Phone Number</label>
+            <input
+              type="tel"
+              name="phone"
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Enter your phone number"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-medium text-gray-700">Describe Your Issue</label>
+            <textarea
+              name="issue"
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              rows="4"
+              value={formData.issue}
+              onChange={handleChange}
+              placeholder="Describe your problem here"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            className="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded transition-colors"
+          >
+            Submit
+          </button>
+        </form>
+        {message && <p className="mt-4 text-center text-lg font-medium text-indigo-700">{message}</p>}
+      </div>
     </div>
   );
 };

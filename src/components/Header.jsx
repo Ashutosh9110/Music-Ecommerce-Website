@@ -17,7 +17,7 @@ const Header = () => {
 
   return (
     <header className="bg-gray-900 text-white shadow-md sticky top-0 z-50">
-      <div className="container mx-auto flex items-center justify-between py-3 px-4">
+      <div className="w-full flex items-center justify-between py-3 px-6 max-w-screen-2xl mx-auto">
         <NavLink to="/" className="text-2xl font-bold tracking-tight hover:text-indigo-400 transition-colors">E-Commerce Store</NavLink>
         <nav className="flex items-center gap-4">
           <NavLink to="/" className={({ isActive }) => isActive ? "font-semibold underline" : "hover:text-indigo-300 transition-colors"}>Home</NavLink>
@@ -25,7 +25,7 @@ const Header = () => {
           <NavLink to="/products" className={({ isActive }) => isActive ? "font-semibold underline" : "hover:text-indigo-300 transition-colors"}>Products</NavLink>
           <NavLink to="/contact" className={({ isActive }) => isActive ? "font-semibold underline" : "hover:text-indigo-300 transition-colors"}>Contact</NavLink>
           <button
-            className="relative flex items-center px-3 py-1 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-medium transition-colors"
+            className=""
             onClick={() => setShowCart(true)}
           >
             🛒 Cart

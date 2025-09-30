@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-const API_KEY = "YOUR_API_KEY"; // TODO: Replace with your actual API key
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 export default function ChangePassword() {
   const [newPassword, setNewPassword] = useState("");
