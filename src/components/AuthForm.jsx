@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
@@ -10,8 +10,14 @@ export default function AuthForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [isLogin, setIsLogin] = useState(false); // false = Sign Up, true = Sign In
-  const { login } = useContext(AuthContext);
+  const { login, auth } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth?.isLoggedIn) {
+      navigate("/products", { replace: true });
+    }
+  }, [auth?.isLoggedIn, navigate]);
 
   const submitHandler = async (e) => {
     e.preventDefault();  
@@ -50,7 +56,7 @@ export default function AuthForm() {
       if (data.idToken) {
         console.log("JWT idToken:", data.idToken);
       }
-      navigate("/");
+      navigate("/products", { replace: true });
     } catch (err) {
       setIsLoading(false);
       setError(err.message);
